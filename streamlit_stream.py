@@ -11,7 +11,7 @@ for message in st.session_state["message_history"]:
 
 user_input = st.chat_input("Type here")
 
-config = {"configurable": {"thread_id": "1"}}
+config = {"configurable": {"thread_id": st.session_state["thread_id"]}}
 
 if user_input:
     st.session_state["message_history"].append({"role": "user", "content": user_input})

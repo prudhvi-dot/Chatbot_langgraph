@@ -1,7 +1,7 @@
 from langgraph.graph import StateGraph, START, END
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langgraph.checkpoint.memory import InMemorySaver
-from langchain_core.messages import BaseMessage, HumanMessage
+from langchain_core.messages import BaseMessage
 from langgraph.graph.message import add_messages
 from dotenv import load_dotenv
 from typing import TypedDict, Annotated
@@ -32,13 +32,3 @@ graph.add_edge(START, "chat")
 graph.add_edge("chat", END)
 
 chatbot = graph.compile(checkpointer=checkpointer)
-
-config = {"configurable": {"thread_id": "1"}}
-
-for message_chunk, metadata in chatbot.stream(
-    {"messages": [HumanMessage(content="What is the recipe to make pasta")]},
-    config=config,
-    stream_mode="messages",
-):
-    if message_chunk.content:
-        print(message_chunk.content, end=" ")
